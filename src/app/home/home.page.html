@@ -1,0 +1,43 @@
+﻿<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Citas Famosas
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/citas">
+        <ion-icon name="list"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/configuracion">
+        <ion-icon name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div style="text-align: center; margin-top: 50px;">
+    <h2>Cita del Día</h2>
+    
+    <div *ngIf="citaActual; else noCita">
+      <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px;">
+        <p style="font-size: 18px; font-style: italic;">"{{citaActual?.frase}}"</p>
+        <p style="font-weight: bold;">- {{citaActual?.autor}}</p>
+      </div>
+      
+      <ion-button expand="block" (click)="obtenerNuevaCita()" style="margin: 10px;">
+        Nueva Cita Aleatoria
+      </ion-button>
+      
+      <ion-button *ngIf="permiteBorrar" expand="block" color="danger" (click)="eliminarCita()" style="margin: 10px;">
+        Eliminar esta Cita
+      </ion-button>
+    </div>
+    
+    <ng-template #noCita>
+      <p>No hay citas disponibles. Agrega algunas en la sección de gestión.</p>
+      <ion-button routerLink="/citas">
+        Ir a Gestión de Citas
+      </ion-button>
+    </ng-template>
+  </div>
+</ion-content>

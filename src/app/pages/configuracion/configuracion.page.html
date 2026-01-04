@@ -1,0 +1,41 @@
+﻿<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Configuración</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Opciones de la Aplicación</ion-card-title>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-toggle [(ngModel)]="permiteBorrar" (ionChange)="guardarConfiguracion()">
+            <ion-label>
+              <h2>Permitir borrar citas en el inicio</h2>
+              <p>Habilita el botón para eliminar citas en la pantalla principal</p>
+            </ion-label>
+          </ion-toggle>
+        </ion-item>
+      </ion-list>
+      
+      <div class="ion-margin-top">
+        <ion-button expand="block" color="medium" (click)="limpiarDatos()">
+          <ion-icon slot="start" name="trash"></ion-icon>
+          Limpiar todas las citas
+        </ion-button>
+        
+        <ion-button expand="block" color="light" routerLink="/home">
+          <ion-icon slot="start" name="home"></ion-icon>
+          Volver al inicio
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Gestión de Citas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Formulario para agregar citas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Agregar Nueva Cita</ion-card-title>
+      <ion-card-subtitle>Completa los campos requeridos (*)</ion-card-subtitle>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <form [formGroup]="citaForm" (ngSubmit)="agregarCita()">
+        <!-- Campo Frase -->
+        <ion-item>
+          <ion-label position="floating">Frase *</ion-label>
+          <ion-textarea 
+            formControlName="frase" 
+            rows="3"
+            placeholder="Ingresa la cita famosa..."
+            [class.invalid]="frase.invalid && (frase.dirty || frase.touched)">
+          </ion-textarea>
+        </ion-item>
+        
+        <!-- Mensajes de error para Frase -->
+        <div *ngIf="frase.invalid && (frase.dirty || frase.touched)" class="error-message">
+          <ion-text color="danger" *ngIf="frase.errors?.['required']">
+            <ion-icon name="alert-circle" size="small"></ion-icon>
+            La frase es obligatoria
+          </ion-text>
+          <ion-text color="danger" *ngIf="frase.errors?.['minlength']">
+            <ion-icon name="alert-circle" size="small"></ion-icon>
+            La frase debe tener al menos 5 caracteres
+          </ion-text>
+        </div>
+        
+        <!-- Campo Autor -->
+        <ion-item>
+          <ion-label position="floating">Autor *</ion-label>
+          <ion-input 
+            formControlName="autor" 
+            type="text"
+            placeholder="Nombre del autor..."
+            [class.invalid]="autor.invalid && (autor.dirty || autor.touched)">
+          </ion-input>
+        </ion-item>
+        
+        <!-- Mensajes de error para Autor -->
+        <div *ngIf="autor.invalid && (autor.dirty || autor.touched)" class="error-message">
+          <ion-text color="danger" *ngIf="autor.errors?.['required']">
+            <ion-icon name="alert-circle" size="small"></ion-icon>
+            El autor es obligatorio
+          </ion-text>
+          <ion-text color="danger" *ngIf="autor.errors?.['minlength']">
+            <ion-icon name="alert-circle" size="small"></ion-icon>
+            El autor debe tener al menos 2 caracteres
+          </ion-text>
+        </div>
+        
+        <!-- Botón de envío -->
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          [disabled]="!citaForm.valid"
+          class="ion-margin-top"
+          color="primary">
+          <ion-icon slot="start" name="add-circle"></ion-icon>
+          Agregar Cita
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  
+  <!-- Lista de citas existentes -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Citas Registradas</ion-card-title>
+      <ion-card-subtitle>Total: {{citas.length}} citas</ion-card-subtitle>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <ion-list>
+        <!-- Mostrar cada cita con opción para eliminar -->
+        <ion-item-sliding *ngFor="let cita of citas">
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <h2>"{{cita.frase}}"</h2>
+              <p><strong>- {{cita.autor}}</strong></p>
+              <p><small>{{cita.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</small></p>
+            </ion-label>
+          </ion-item>
+          
+          <!-- Opción para eliminar -->
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="eliminarCita(cita.id)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+              Eliminar
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+        
+        <!-- Mensaje si no hay citas -->
+        <ion-item *ngIf="citas.length === 0">
+          <ion-label class="ion-text-center">
+            <ion-icon name="book-outline" size="large" color="medium"></ion-icon>
+            <h3>No hay citas registradas</h3>
+            <p>Agrega tu primera cita usando el formulario superior</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

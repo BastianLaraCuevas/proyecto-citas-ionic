@@ -1,0 +1,50 @@
+﻿<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Inicio</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/citas">
+        <ion-icon slot="icon-only" name="list"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/configuracion">
+        <ion-icon slot="icon-only" name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="quote-container ion-text-center">
+    <h2>Cita del Día</h2>
+    
+    <ion-card *ngIf="citaActual" class="ion-margin-vertical">
+      <ion-card-content>
+        <p class="quote-text ion-text-justify">"{{citaActual.frase}}"</p>
+        <p class="quote-author ion-text-right">- {{citaActual.autor}}</p>
+        <p class="fecha ion-text-right"><small>{{citaActual.fechaCreacion | date:'dd/MM/yyyy'}}</small></p>
+      </ion-card-content>
+      
+      <ion-card-header>
+        <ion-card-subtitle>
+          <ion-button expand="block" (click)="obtenerNuevaCita()" color="primary">
+            Nueva Cita Aleatoria
+            <ion-icon slot="end" name="refresh"></ion-icon>
+          </ion-button>
+          
+          <ion-button *ngIf="permiteBorrar" expand="block" color="danger" (click)="eliminarCita()">
+            Eliminar esta Cita
+            <ion-icon slot="end" name="trash"></ion-icon>
+          </ion-button>
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+    
+    <div *ngIf="!citaActual" class="no-quotes ion-text-center">
+      <ion-icon name="sad-outline" size="large"></ion-icon>
+      <p>No hay citas disponibles. Agrega algunas en la sección de gestión.</p>
+      <ion-button routerLink="/citas" color="secondary">
+        <ion-icon slot="start" name="add-circle"></ion-icon>
+        Ir a Gestión de Citas
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
